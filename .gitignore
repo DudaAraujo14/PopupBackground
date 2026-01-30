@@ -4,3 +4,5 @@ PopupBackgroundApp/bin/Debug
 packages
 PopupBackgroundApp/Logs
 .vs
+PopupBackgroundApp/obj
+.cr

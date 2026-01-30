@@ -52,6 +52,7 @@
     <Compile Include="Core\ApiService.cs" />
     <Compile Include="Core\NotificationService.cs" />
     <Compile Include="Core\TimerService.cs" />
+    <Compile Include="Interfaces\IApiService.cs" />
     <Compile Include="Models\ChuckNorrisResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +94,15 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Refit">
+      <Version>9.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Refit.HttpClientFactory">
+      <Version>9.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Refit.Newtonsoft.Json">
+      <Version>9.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
