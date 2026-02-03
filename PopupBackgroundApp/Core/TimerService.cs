@@ -7,10 +7,13 @@ namespace PopupBackgroundApp.Core
     public static class TimerService
     {
         private static Timer _timer;
+        private static ApiService _apiService;
 
         public static void Start()
         {
-            _timer = new Timer(
+            _apiService = new ApiService();
+
+            _timer = new Timer(      
                 Execute,
                 null,
                 TimeSpan.Zero,
@@ -20,8 +23,8 @@ namespace PopupBackgroundApp.Core
 
         private static async void Execute(object state)
         {
-            string mensagem = await ApiService.BuscarMensagem();
-            NotificationService.Show(mensagem);
+            string mensagem = await _apiService.BuscarMensagemAsync();
+            RegistroService.Show(mensagem);
         }
     }
 }

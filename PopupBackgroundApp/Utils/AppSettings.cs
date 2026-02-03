@@ -10,6 +10,12 @@ namespace PopupBackgroundApp.Utils
         public static string ApiUrl =>
             ConfigurationManager.AppSettings["ApiUrl"];
 
+        public static string CaminhoArquivo =>
+            ConfigurationManager.AppSettings["CaminhoArquivo"];
 
+        public static string NomeArquivo =>
+            ConfigurationManager.AppSettings["NomeArquivo"];
+
+        public static bool Ativo { get; internal set; }
     }
 }

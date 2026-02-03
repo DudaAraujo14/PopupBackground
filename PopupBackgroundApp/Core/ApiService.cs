@@ -1,34 +1,38 @@
-﻿using System;
-using System.Net.Http;
+﻿using Refit;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using PopupBackgroundApp.Interfaces;
-using PopupBackgroundApp.Models;
-using PopupBackgroundApp.Utils;
-using Refit;
 
 namespace PopupBackgroundApp.Core
 {
-    public static class ApiService
+    public class ApiService
     {
-        // Reusar HttpClient é uma boa prática (evita ficar criando/descartando toda hora)
-        private static readonly HttpClient _httpClient = new HttpClient
-        {
-            BaseAddress = new Uri(AppSettings.ApiUrl)
-        };
+        private readonly IApiService _api;
 
-        private static readonly IApiService _api =
-            RestService.For<IApiService>(
-                _httpClient,
-                new RefitSettings
-                {
-                    ContentSerializer = new NewtonsoftJsonContentSerializer()
-                });
-
-        public static async Task<string> BuscarMensagem()
+        // 🔹 prefixo da URL configurado no construtor
+        public ApiService()
         {
-            var response = await _api.BuscaPiada();
-            return response?.value ?? "Mensagem indisponível";
+            _api = RestService.For<IApiService>(
+                "https://api.chucknorris.io"
+            );
+        }
+
+        public async Task<string> BuscarMensagemAsync()
+        {
+            // response → categorias
+            var response = await _api.BuscarCategoriasAsync();
+
+            if (response == null || response.Count == 0)
+                return "Nenhuma categoria encontrada.";
+
+            // escolhe uma categoria aleatória
+            var categoria = response[new Random().Next(response.Count)];
+
+            // response2 → piada da categoria
+            var response2 = await _api.BuscarPiadaPorCategoriaAsync(categoria);
+
+            return response2?.value ?? "Piada não encontrada.";
         }
     }
 }
