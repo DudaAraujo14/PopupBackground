@@ -18,6 +18,12 @@ namespace PopupBackgroundApp.Core
             );
         }
 
+        // Construtor de TESTE (injeção)
+        public ApiService(IApiService api)
+        {
+            _api = api;
+        }
+
         public async Task<string> BuscarMensagemAsync()
         {
             // response → categorias
