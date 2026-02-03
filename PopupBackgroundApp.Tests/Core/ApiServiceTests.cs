@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using PopupBackgroundApp.Core;
 using PopupBackgroundApp.Tests.Mocks;
+using System;
 using System.Threading.Tasks;
 
 namespace PopupBackgroundApp.Tests.Core
@@ -20,10 +21,10 @@ namespace PopupBackgroundApp.Tests.Core
         [Test]
         public async Task BuscarMensagemAsync_DeveRetornarMensagem_QuandoApiResponderCorretamente()
         {
-            // Act
+            
             var resultado = await _service.BuscarMensagemAsync();
 
-            // Assert (NUnit)
+            
             Assert.That(resultado, Is.Not.Null);
             Assert.That(resultado, Is.Not.Empty);
             Assert.That(resultado, Does.Contain("Chuck Norris"));
@@ -32,15 +33,44 @@ namespace PopupBackgroundApp.Tests.Core
         [Test]
         public void BuscarMensagemAsync_DeveLancarExcecao_QuandoApiFalhar()
         {
-            // Setup
+           
             var mockApi = ApiServiceMock.CriarMockComErro();
             var serviceComErro = new ApiService(mockApi.Object);
 
-            // Assert
+            
             Assert.ThrowsAsync<System.Exception>(async () =>
             {
                 await serviceComErro.BuscarMensagemAsync();
             });
         }
+
+        [Test]
+        public void BuscarMensagemAsync_QuandoApiNaoRetornaCategorias_DeveLancarExcecao()
+        {
+            // Arrange
+            var mockApi = ApiServiceMock.CriarMockSemCategorias();
+            var service = new ApiService(mockApi.Object);
+
+            // Act + Assert
+            Assert.ThrowsAsync<Exception>(async () =>
+            {
+                await service.BuscarMensagemAsync();
+            });
+        }
+
+        [Test]
+        public void BuscarMensagemAsync_QuandoApiRetornaPiadaInvalida_DeveLancarExcecao()
+        {
+            // Arrange
+            var mockApi = ApiServiceMock.CriarMockComPiadaInvalida();
+            var service = new ApiService(mockApi.Object);
+
+            // Act + Assert
+            Assert.ThrowsAsync<Exception>(async () =>
+            {
+                await service.BuscarMensagemAsync();
+            });
+        }
+
     }
 }

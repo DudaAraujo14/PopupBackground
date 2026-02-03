@@ -17,7 +17,7 @@ namespace PopupBackgroundApp.Tests.Mocks
             mock.Setup(api => api.BuscarPiadaPorCategoriaAsync(It.IsAny<string>()))
                 .ReturnsAsync(new ChuckNorrisResponse
                 {
-                    value = "Chuck Norris escreve código que não precisa de testes."
+                    Value = "Chuck Norris escreve código que não precisa de testes."
                 });
 
             return mock;
@@ -32,5 +32,32 @@ namespace PopupBackgroundApp.Tests.Mocks
 
             return mock;
         }
+
+        public static Mock<IApiService> CriarMockSemCategorias()
+        {
+            var mock = new Mock<IApiService>();
+
+            mock.Setup(api => api.BuscarCategoriasAsync())
+                .ReturnsAsync(new List<string>());
+
+            return mock;
+        }
+
+        public static Mock<IApiService> CriarMockComPiadaInvalida()
+        {
+            var mock = new Mock<IApiService>();
+
+            mock.Setup(api => api.BuscarCategoriasAsync())
+                .ReturnsAsync(new List<string> { "dev" });
+
+            mock.Setup(api => api.BuscarPiadaPorCategoriaAsync(It.IsAny<string>()))
+                .ReturnsAsync(new ChuckNorrisResponse
+                {
+                    Value = ""
+                });
+
+            return mock;
+        }
+
     }
 }

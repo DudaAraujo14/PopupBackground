@@ -6,3 +6,5 @@ PopupBackgroundApp/Logs
 .vs
 PopupBackgroundApp/obj
 .cr
+PopupBackgroundApp.Tests/obj/Debug
+PopupBackgroundApp.Tests/bin/Debug
