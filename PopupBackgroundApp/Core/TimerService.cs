@@ -11,9 +11,12 @@ namespace PopupBackgroundApp.Core
 
         public static void Start()
         {
+            if (!AppSettings.Ativo)
+                return;
+
             _apiService = new ApiService();
 
-            _timer = new Timer(      
+            _timer = new Timer(
                 Execute,
                 null,
                 TimeSpan.Zero,

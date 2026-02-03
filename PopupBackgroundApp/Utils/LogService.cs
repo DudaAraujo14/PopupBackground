@@ -5,10 +5,9 @@ namespace PopupBackgroundApp.Utils
 {
     public static class LogService
     {
-        private static readonly 
-            string caminhoCompletoDoLog = $"{AppSettings.CaminhoArquivo}/{AppSettings.NomeArquivo}";
-       // Path.Combine("c://temp","app.log");
-      
+        private static readonly string caminhoCompletoDoLog =
+            $"{AppSettings.CaminhoArquivo}/{AppSettings.NomeArquivo}";
+
         public static void Registrar(string mensagem)
         {
             try
@@ -17,17 +16,14 @@ namespace PopupBackgroundApp.Utils
                     Path.GetDirectoryName(caminhoCompletoDoLog)
                 );
 
-                string LinhaMensagem =
-                    $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {mensagem}" + Environment.NewLine;
+                string linha =
+                    $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | {mensagem}{Environment.NewLine}";
 
-                File.AppendAllText(
-                    caminhoCompletoDoLog,
-                    LinhaMensagem 
-                );
+                File.AppendAllText(caminhoCompletoDoLog, linha);
             }
             catch
             {
-                
+                // nunca quebrar a aplicação
             }
         }
     }

@@ -4,6 +4,9 @@ namespace PopupBackgroundApp.Utils
 {
     public static class AppSettings
     {
+        public static bool Ativo =>
+            bool.Parse(ConfigurationManager.AppSettings["Ativo"]);
+
         public static int IntervaloMinutos =>
             int.Parse(ConfigurationManager.AppSettings["IntervaloMinutos"]);
 
@@ -15,7 +18,5 @@ namespace PopupBackgroundApp.Utils
 
         public static string NomeArquivo =>
             ConfigurationManager.AppSettings["NomeArquivo"];
-
-        public static bool Ativo { get; internal set; }
     }
 }

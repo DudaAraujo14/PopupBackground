@@ -4,11 +4,9 @@ namespace PopupBackgroundApp.Core
 {
     public static class RegistroService
     {
-        public static void Show(string message)
+        public static void Show(string mensagem)
         {
-            //  grava no log (append)
-
-            LogService.Registrar(message);
+            LogService.Registrar(mensagem);
         }
     }
 }

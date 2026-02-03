@@ -2,6 +2,8 @@
 {
     public class ChuckNorrisResponse
     {
-        public string value { get; set; }
+        public string value;
+
+        public string Value { get; set; }
     }
 }

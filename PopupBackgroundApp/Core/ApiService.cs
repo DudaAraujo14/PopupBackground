@@ -1,44 +1,43 @@
-﻿using Refit;
-using System;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using PopupBackgroundApp.Interfaces;
+using PopupBackgroundApp.Utils;
+using Refit;
 
 namespace PopupBackgroundApp.Core
 {
     public class ApiService
     {
         private readonly IApiService _api;
+        private readonly Random _random;
 
-        // 🔹 prefixo da URL configurado no construtor
         public ApiService()
         {
-            _api = RestService.For<IApiService>(
-                "https://api.chucknorris.io"
-            );
+            _api = RestService.For<IApiService>(AppSettings.ApiUrl);
+            _random = new Random();
         }
 
-        // Construtor de TESTE (injeção)
         public ApiService(IApiService api)
         {
             _api = api;
+            _random = new Random();
         }
 
         public async Task<string> BuscarMensagemAsync()
         {
-            // response → categorias
-            var response = await _api.BuscarCategoriasAsync();
+            var categorias = await _api.BuscarCategoriasAsync();
 
-            if (response == null || response.Count == 0)
-                return "Nenhuma categoria encontrada.";
+            if (categorias == null || categorias.Count == 0)
+                throw new Exception("Nenhuma categoria encontrada");
 
-            // escolhe uma categoria aleatória
-            var categoria = response[new Random().Next(response.Count)];
+            var categoria = categorias[_random.Next(categorias.Count)];
 
-            // response2 → piada da categoria
-            var response2 = await _api.BuscarPiadaPorCategoriaAsync(categoria);
+            var piada = await _api.BuscarPiadaPorCategoriaAsync(categoria);
 
-            return response2?.value ?? "Piada não encontrada.";
+            if (piada == null || string.IsNullOrWhiteSpace(piada.Value))
+                throw new Exception("Piada inválida");
+
+            return piada.Value;
         }
     }
 }
