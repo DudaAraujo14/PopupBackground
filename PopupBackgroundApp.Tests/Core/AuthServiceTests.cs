@@ -56,7 +56,7 @@ namespace PopupBackgroundApp.Tests.Core
         public void ObterBearerTokenAsync_DeveLancarExcecao_QuandoApiRetornarErro()
         {
             var authApiMock = new Mock<IAuthApi>();
-
+            
             authApiMock
                 .Setup(api => api.GerarTokenAsync(It.IsAny<OAuthRequest>()))
                 .ThrowsAsync(new Exception("401 Unauthorized"));
