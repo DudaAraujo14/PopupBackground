@@ -7,10 +7,10 @@ namespace PopupBackgroundApp.Utils
     {
         public static void Register()
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(
+            var key = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
-            rk.SetValue("PopupBackgroundApp", Application.ExecutablePath);
+            key.SetValue("PopupBackgroundApp", Application.ExecutablePath);
         }
     }
 }

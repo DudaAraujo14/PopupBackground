@@ -1,43 +1,39 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Refit;
 using PopupBackgroundApp.Interfaces;
 using PopupBackgroundApp.Utils;
-using Refit;
+using System.Threading.Tasks;
 
 namespace PopupBackgroundApp.Core
 {
     public class ApiService
     {
-        private readonly IApiService _api;
-        private readonly Random _random;
+        private readonly AuthService _authService;
 
         public ApiService()
         {
-            _api = RestService.For<IApiService>(AppSettings.ApiUrl);
-            _random = new Random();
+            _authService = new AuthService();
         }
 
-        public ApiService(IApiService api)
+        public async Task<string> ConsultarStatusAsync(string processId)
         {
-            _api = api;
-            _random = new Random();
-        }
+            var token = await _authService.ObterBearerTokenAsync();
 
-        public async Task<string> BuscarMensagemAsync()
+            var api = RestService.For<IApiService>(
+            AppSettings.ApiBaseUrl,
+            new RefitSettings
         {
-            var categorias = await _api.BuscarCategoriasAsync();
+             AuthorizationHeaderValueGetter =
+            (request, cancellationToken) =>
+                Task.FromResult($"Bearer {token}")
+    });
 
-            if (categorias == null || categorias.Count == 0)
-                throw new Exception("Nenhuma categoria encontrada");
 
-            var categoria = categorias[_random.Next(categorias.Count)];
+            var response = await api.ConsultarStatusFormalizacaoAsync(processId);
 
-            var piada = await _api.BuscarPiadaPorCategoriaAsync(categoria);
+            if (string.IsNullOrWhiteSpace(response))
+                throw new System.Exception("Resposta vazia da API da Único");
 
-            if (piada == null || string.IsNullOrWhiteSpace(piada.Value))
-                throw new Exception("Piada inválida");
-
-            return piada.Value;
+            return response;
         }
     }
 }

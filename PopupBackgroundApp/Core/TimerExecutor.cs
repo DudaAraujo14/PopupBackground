@@ -8,21 +8,21 @@ namespace PopupBackgroundApp.Core
     {
         private readonly ApiService _apiService;
 
-        public TimerExecutor(ApiService apiService)
+        public TimerExecutor()
         {
-            _apiService = apiService;
+            _apiService = new ApiService();
         }
 
         public async Task ExecuteAsync()
         {
             try
             {
-                var mensagem = await _apiService.BuscarMensagemAsync();
-                RegistroService.Show(mensagem);
+                var resultado = await _apiService.ConsultarStatusAsync("GUID-EXEMPLO");
+                LogService.Registrar(resultado);
             }
             catch (Exception ex)
             {
-                ErrorLogService.Registrar(ex);
+                LogService.Registrar($"ERRO: {ex.Message}");
             }
         }
     }

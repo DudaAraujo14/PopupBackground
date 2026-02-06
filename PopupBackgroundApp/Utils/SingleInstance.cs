@@ -8,9 +8,8 @@ namespace PopupBackgroundApp.Utils
 
         public static bool Start()
         {
-            bool createdNew;
-            _mutex = new Mutex(true, "PopupBackgroundAppMutex", out createdNew);
-            return createdNew;
+            _mutex = new Mutex(true, "PopupBackgroundAppMutex", out bool created);
+            return created;
         }
     }
 }

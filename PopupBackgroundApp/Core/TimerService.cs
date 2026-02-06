@@ -7,27 +7,20 @@ namespace PopupBackgroundApp.Core
     public static class TimerService
     {
         private static Timer _timer;
-        private static ApiService _apiService;
 
         public static void Start()
         {
             if (!AppSettings.Ativo)
                 return;
 
-            _apiService = new ApiService();
+            var executor = new TimerExecutor();
 
             _timer = new Timer(
-                Execute,
+                async _ => await executor.ExecuteAsync(),
                 null,
                 TimeSpan.Zero,
                 TimeSpan.FromMinutes(AppSettings.IntervaloMinutos)
             );
-        }
-
-        private static async void Execute(object state)
-        {
-            string mensagem = await _apiService.BuscarMensagemAsync();
-            RegistroService.Show(mensagem);
         }
     }
 }
