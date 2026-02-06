@@ -1,5 +1,5 @@
 ﻿
-/*
+
  using NUnit.Framework;
 using Moq;
 using PopupBackgroundApp.Core;
@@ -33,4 +33,3 @@ namespace PopupBackgroundApp.Tests.Core
         }
     }
 }
-*/
