@@ -49,12 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ApiService.cs" />
-    <Compile Include="Core\AuthService.cs" />
+    <Compile Include="Config\DependencyConfig.cs" />
+    <Compile Include="Core\ApiUnico.cs" />
+    <Compile Include="Core\AuthUnico.cs" />
     <Compile Include="Core\TimerExecutor.cs" />
     <Compile Include="Core\TimerService.cs" />
-    <Compile Include="Interfaces\IApiService.cs" />
-    <Compile Include="Interfaces\IAuthApi.cs" />
+    <Compile Include="Interfaces\IApiUnico.cs" />
+    <Compile Include="Interfaces\IApiUnicoService.cs" />
+    <Compile Include="Interfaces\IapiUnicoAuthService.cs" />
+    <Compile Include="Interfaces\IAuthUnico.cs" />
     <Compile Include="Models\OAuthRequest.cs" />
     <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Program.cs" />

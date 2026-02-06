@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Threading.Tasks;
+using PopupBackgroundApp.Interfaces;
 using PopupBackgroundApp.Utils;
 
 namespace PopupBackgroundApp.Core
 {
     public class TimerExecutor
     {
-        private readonly ApiService _apiService;
+        private readonly IApiUnico _apiService;
 
-        public TimerExecutor()
+        public TimerExecutor(
+            IApiUnico apiUnico
+        )
         {
-            _apiService = new ApiService();
+            _apiService = apiUnico;
         }
 
         public async Task ExecuteAsync()
         {
             try
             {
-                var resultado = await _apiService.ConsultarStatusAsync("GUID-EXEMPLO");
+                var resultado = await _apiService.ConsultarStatusFormalizacao("GUID-EXEMPLO");
                 LogService.Registrar(resultado);
             }
             catch (Exception ex)

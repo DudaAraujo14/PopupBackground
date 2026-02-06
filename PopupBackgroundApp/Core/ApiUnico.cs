@@ -5,30 +5,31 @@ using System.Threading.Tasks;
 
 namespace PopupBackgroundApp.Core
 {
-    public class ApiService
+    public class ApiUnico : IApiUnico
     {
-        private readonly AuthService _authService;
+        private readonly IAuthUnico _authService;
 
-        public ApiService()
+        private readonly IApiUnicoService _apiService;
+        public ApiUnico(IAuthUnico authUnico)
         {
-            _authService = new AuthService();
+            _authService = authUnico;
         }
 
-        public async Task<string> ConsultarStatusAsync(string processId)
+        public async Task<string> ConsultarStatusFormalizacao(string processId)
         {
             var token = await _authService.ObterBearerTokenAsync();
 
-            var api = RestService.For<IApiService>(
+            var api = RestService.For<IApiUnicoService>(
             AppSettings.ApiBaseUrl,
             new RefitSettings
         {
              AuthorizationHeaderValueGetter =
             (request, cancellationToken) =>
                 Task.FromResult($"Bearer {token}")
-    });
+        });
 
 
-            var response = await api.ConsultarStatusFormalizacaoAsync(processId);
+            var response = await _apiService.ConsultarStatusFormalizacaoAsync(processId);
 
             if (string.IsNullOrWhiteSpace(response))
                 throw new System.Exception("Resposta vazia da API da Único");

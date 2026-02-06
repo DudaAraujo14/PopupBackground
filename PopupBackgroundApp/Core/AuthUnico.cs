@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace PopupBackgroundApp.Core
 {
-    public class AuthService
+    public class AuthUnico : IAuthUnico
     {
-        private readonly IAuthApi _authApi;
+        private readonly IapiUnicoAuthService _authApi;
 
         
-        public AuthService()
+        public AuthUnico()
         {
-            _authApi = RestService.For<IAuthApi>(AppSettings.AuthBaseUrl);
+            _authApi = RestService.For<IapiUnicoAuthService>(AppSettings.AuthBaseUrl);
         }
 
         // Teste (injeção)
-        public AuthService(IAuthApi authApi)
+        public AuthUnico(IapiUnicoAuthService authApi)
         {
             _authApi = authApi;
         }

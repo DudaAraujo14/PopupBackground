@@ -14,7 +14,7 @@ namespace PopupBackgroundApp.Tests.Core
         [Test]
         public async Task ObterBearerTokenAsync_DeveRetornarToken_QuandoApiResponderComSucesso()
         {
-            var authApiMock = new Mock<IAuthApi>();
+            var authApiMock = new Mock<IapiUnicoAuthService>();
 
             authApiMock
                 .Setup(api => api.GerarTokenAsync(It.IsAny<OAuthRequest>()))
@@ -24,7 +24,7 @@ namespace PopupBackgroundApp.Tests.Core
                     ExpiresIn = 300
                 });
 
-            var service = new AuthService(authApiMock.Object);
+            var service = new AuthUnico(authApiMock.Object);
 
             var token = await service.ObterBearerTokenAsync();
 
@@ -34,7 +34,7 @@ namespace PopupBackgroundApp.Tests.Core
         [Test]
         public void ObterBearerTokenAsync_DeveLancarExcecao_QuandoTokenForVazio()
         {
-            var authApiMock = new Mock<IAuthApi>();
+            var authApiMock = new Mock<IapiUnicoAuthService>();
 
             authApiMock
                 .Setup(api => api.GerarTokenAsync(It.IsAny<OAuthRequest>()))
@@ -44,7 +44,7 @@ namespace PopupBackgroundApp.Tests.Core
                     ExpiresIn = 0
                 });
 
-            var service = new AuthService(authApiMock.Object);
+            var service = new AuthUnico(authApiMock.Object);
 
             Assert.ThrowsAsync<Exception>(async () =>
             {
@@ -55,13 +55,13 @@ namespace PopupBackgroundApp.Tests.Core
         [Test]
         public void ObterBearerTokenAsync_DeveLancarExcecao_QuandoApiRetornarErro()
         {
-            var authApiMock = new Mock<IAuthApi>();
+            var authApiMock = new Mock<IapiUnicoAuthService>();
             
             authApiMock
                 .Setup(api => api.GerarTokenAsync(It.IsAny<OAuthRequest>()))
                 .ThrowsAsync(new Exception("401 Unauthorized"));
 
-            var service = new AuthService(authApiMock.Object);
+            var service = new AuthUnico(authApiMock.Object);
 
             Assert.ThrowsAsync<Exception>(async () =>
             {

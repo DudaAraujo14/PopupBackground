@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 
 namespace PopupBackgroundApp.Interfaces
 {
-    public interface IAuthApi
+    /// <summary>
+    /// interface da unico para autorização
+    /// </summary>
+    public interface IapiUnicoAuthService
     {
         [Post("/oauth2/token")]
         Task<TokenResponse> GerarTokenAsync([Body] OAuthRequest request);
