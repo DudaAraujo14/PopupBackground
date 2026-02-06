@@ -10,9 +10,13 @@ namespace PopupBackgroundApp.Core
         private readonly IAuthUnico _authService;
 
         private readonly IApiUnicoService _apiService;
-        public ApiUnico(IAuthUnico authUnico)
+        public ApiUnico(
+            IAuthUnico authUnico,
+            IApiUnicoService apiUnicoService
+        )
         {
             _authService = authUnico;
+            _apiService = apiUnicoService;
         }
 
         public async Task<string> ConsultarStatusFormalizacao(string processId)

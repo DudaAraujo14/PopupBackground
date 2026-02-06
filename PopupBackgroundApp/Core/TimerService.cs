@@ -16,13 +16,13 @@ namespace PopupBackgroundApp.Core
 
     public class TimerService : ITimerService
     {
-        private readonly IApiUnico _apiService;
+        private readonly IApiUnico _IApiUnico;
 
         private  Timer _timer;
 
-        public TimerService()
-        { 
-            
+        public TimerService(IApiUnico apiUnico)
+        {
+            _IApiUnico = apiUnico;
         }
 
         public void Start()
@@ -42,7 +42,7 @@ namespace PopupBackgroundApp.Core
         {
             try
             {
-                var resultado = await _apiService.ConsultarStatusFormalizacao("GUID-EXEMPLO");
+                var resultado = await _IApiUnico.ConsultarStatusFormalizacao("GUID-EXEMPLO");
                 LogService.Registrar(resultado);
             }
             catch (Exception ex)

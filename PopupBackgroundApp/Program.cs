@@ -23,6 +23,9 @@ namespace PopupBackgroundApp
 
             _provider = DependencyConfig.Configure();
 
+            var timer = _provider.GetRequiredService<ITimerService>();
+            timer.Start();
+
             var ctx = _provider.GetRequiredService<ApplicationContext>();
             Application.Run(ctx);
 

@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using PopupBackgroundApp.Core;
+using PopupBackgroundApp.Interfaces;
+using PopupBackgroundApp.Models;
 using System.Threading.Tasks;
 
 namespace PopupBackgroundApp.Tests.Core
@@ -10,7 +13,12 @@ namespace PopupBackgroundApp.Tests.Core
         [Test]
         public void ExecuteAsync_NaoDeveLancarExcecao()
         {
-            var executor = new TimerExecutor();
+            var authApiMock = new Mock<IApiUnico>();
+
+            authApiMock
+                .Setup(api => api.ConsultarStatusFormalizacao(It.IsAny<string>()))
+                .ReturnsAsync(string.Empty);
+            var executor = new TimerExecutor(authApiMock.Object);
 
             Assert.DoesNotThrowAsync(async () =>
             {
